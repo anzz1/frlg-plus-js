@@ -15,7 +15,7 @@ const HEADERS_INFO=[
 const FORCE_HTTPS=false;
 if(FORCE_HTTPS && location.protocol==='http:')
 	location.href=window.location.href.replace('http:','https:');
-else if(location.protocol==='https:' && 'serviceWorker' in navigator && window.location.hostname==='www.marcrobledo.com')
+else if(location.protocol==='https:' && 'serviceWorker' in navigator && window.location.hostname==='anzz1.github.io')
 	navigator.serviceWorker.register('/frlg-plus-js/_cache_service_worker.js', {scope: '/frlg-plus-js/'});
 
 
