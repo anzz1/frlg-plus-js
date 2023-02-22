@@ -390,12 +390,13 @@ button.no-text.with-icon:before{margin-right:0px}
 
 #thumbwrap {
 	position:relative;
+	overflow-x:clip;
 }
 .thumb img { 
 	position:absolute;
 	visibility:hidden;
 	top:-160px;
-	left:370px; 
+	left:44%; 
 	z-index:1;
 }
 
