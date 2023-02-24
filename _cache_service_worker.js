@@ -13,8 +13,8 @@
 	navigator.serviceWorker.register('/repo/_cache_service_worker.js', {scope: '/repo/'})
 */
 
-var PRECACHE_ID='rom-patcher-js';
-var PRECACHE_VERSION='v27b';
+var PRECACHE_ID='frlg-plus-js';
+var PRECACHE_VERSION='001';
 var PRECACHE_URLS=[
 	'/frlg-plus-js/','/frlg-plus-js/index.html',
 	'/frlg-plus-js/manifest.json',

@@ -53,8 +53,98 @@
 	<script type="text/javascript">
 		var CUSTOM_PATCHER=[
 			{
-				file:'./frlgPlus.bps',
+				file:'./bps/frlgPlus-aad079d.bps',
 				name:'Pokemon FRLG+ (git-aad079d)',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-A.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [A]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-B.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [B]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-AB.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [AB]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-M.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [M]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-AM.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [AM]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-BM.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [BM]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-ABM.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [ABM]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-R.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [R]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-AR.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [AR]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-BR.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [BR]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-ABR.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [ABR]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-MR.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [MR]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-AMR.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [AMR]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-BMR.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [BMR]',
+				crc:0xdd88761c,
+				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
+			},
+			{
+				file:'./bps/frlgPlus-aad079d-ABMR.bps',
+				name:'Pokemon FRLG+ (git-aad079d) [ABMR]',
 				crc:0xdd88761c,
 				md5:'e26ee0d44e809351c8ce2d73c7400cdd'
 			}
@@ -75,7 +165,10 @@
 
 	<div id="tab0" class="tab">
 		<div class="row m-b">
-			<div class="w100 text-center">Enter a “ <b>FireRed V1.0 (<span id="squirrels">Squirrels</span>)</b> ” ROM</div>
+			<div class="w40 text-right"><h3><a href="https://github.com/Deokishisu/FRLG-Plus/">GitHub</a></h3></div><h3> | </h3><div class="w40"><h3><a href="https://www.pokecommunity.com/showthread.php?t=454382">Pok&eacute;Community</a></h3></div>
+		</div>
+		<div class="row m-b">
+			<div class="w100 text-center">Enter a “ <span class="selectable"><b>FireRed V1.0 (<span id="squirrels">Squirrels</span>)</b></span> ” ROM</div>
 		</div>
 		<div class="row m-b">
 			<div class="leftcol text-right"><label for="input-file-rom" data-localize="rom_file">ROM file:</label></div>
@@ -105,6 +198,47 @@
 			<div class="leftcol text-right"><label for="input-file-patch" data-localize="patch_file">Patch file:</label></div>
 			<div class="rightcol">
 				<input type="file" id="input-file-patch" accept=".bps,.zip"/>
+			</div>
+		</div>
+
+		<div class="row m-b">
+			<div class="leftcol text-right"></div>
+			<div class="rightcol">
+				<input type="checkbox" id="checkbox-swapcase" /> <label for="checkbox-swapcase"><b>A</b>uto Case Swap</label> 
+				<div class="tooltip">
+					<sup><label for="checkbox-swapcase">[?]</label></sup>
+					<span class="tooltiptext tt1">Auto swap text style to lowercase after entering a character in naming screen.</span>
+				</div>
+			</div>
+		</div>
+		<div class="row m-b">
+			<div class="leftcol text-right"></div>
+			<div class="rightcol">
+				<input type="checkbox" id="checkbox-battletower" checked /> <label for="checkbox-battletower"><b>B</b>attle Tower Ignores EV/IV Setting</label>
+				<div class="tooltip">
+					<sup><label for="checkbox-battletower">[?]</label></sup>
+					<span class="tooltiptext tt2"><i><b>BATTLE TOWER</b></i> ignores EV/IV key setting to preserve the challenge.</span>
+				</div>
+			</div>
+		</div>
+		<div class="row m-b">
+			<div class="leftcol text-right"></div>
+			<div class="rightcol">
+				<input type="checkbox" id="checkbox-battlemoves" checked /> <label for="checkbox-battlemoves"><b>M</b>ove Type/Category Icons In Battle</label>
+				<div class="tooltip">
+					<sup><label for="checkbox-battlemoves">[?]</label></sup>
+					<span class="tooltiptext tt3">Show move types and categories as icons in battle. Also exposes the real type of <i><b>WEATHER BALL</b></i> &amp; <i><b>NATURE POWER</b></i>.</span>
+				</div>
+			</div>
+		</div>
+		<div class="row m-b">
+			<div class="leftcol text-right"></div>
+			<div class="rightcol">
+				<input type="checkbox" id="checkbox-randomversion" checked /> <label for="checkbox-randomversion"><b>R</b>andom Version</label>
+				<div class="tooltip">
+					<sup><label for="checkbox-randomversion">[?]</label></sup>
+					<span class="tooltiptext tt4">If no save game exists, set game to FR/LG randomly on boot. If disabled, boots to FR by default.</span>
+				</div>
 			</div>
 		</div>
 

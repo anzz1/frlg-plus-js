@@ -110,6 +110,12 @@ function parseCustomPatch(customPatch){
 	patchFile.seek(0);
 	_readPatchFile();
 
+	if(typeof patch==='undefined' || patch == null){
+		setTabApplyEnabled(true, false);
+		setMessage('apply', _('error_downloading').replace('%s', customPatch.file.replace(/^.*[\/\\]/g,'')), 'error');
+		return;
+	} 
+
 	if(typeof patch.validateCRC === 'undefined'){
 		if(typeof customPatch.crc==='number'){
 			patch.validateCRC=function(romFile,headerSize){
@@ -156,18 +162,22 @@ function fetchPatch(customPatchIndex, compressedFileIndex){
 
 	if(typeof window.fetch==='function'){
 		fetch(uri)
-			.then(result => result.arrayBuffer()) // Gets the response and returns it as a blob
-			.then(arrayBuffer => {
-				patchFile=CUSTOM_PATCHER[customPatchIndex].fetchedFile=new MarcFile(arrayBuffer);
-				patchFile.fileName=customPatch.file.replace(/^.*[\/\\]/g,'');
+			.then(result => { 
+				result.arrayBuffer().then(arrayBuffer => {
+					patchFile=CUSTOM_PATCHER[customPatchIndex].fetchedFile=new MarcFile(arrayBuffer);
+					patchFile.fileName=customPatch.file.replace(/^.*[\/\\]/g,'');
 
-				if(patchFile.getExtension()==='zip' && patchFile.readString(4).startsWith(ZIP_MAGIC))
-					ZIPManager.parseFile(CUSTOM_PATCHER[customPatchIndex].fetchedFile, compressedFileIndex);
-				else
-					parseCustomPatch(CUSTOM_PATCHER[customPatchIndex]);
+					if(patchFile.getExtension()==='zip' && patchFile.readString(4).startsWith(ZIP_MAGIC))
+						ZIPManager.parseFile(CUSTOM_PATCHER[customPatchIndex].fetchedFile, compressedFileIndex);
+					else
+						parseCustomPatch(CUSTOM_PATCHER[customPatchIndex]);
 
-				setMessage('apply');
-			})
+					//setMessage('apply');
+				})
+				.catch(function(evt){
+					setMessage('apply', (_('error_downloading')/* + evt.message */).replace('%s', CUSTOM_PATCHER[customPatchIndex].file.replace(/^.*[\/\\]/g,'')), 'error');
+				});
+			}) // Gets the response and returns it as a blob
 			.catch(function(evt){
 				setMessage('apply', (_('error_downloading')/* + evt.message */).replace('%s', CUSTOM_PATCHER[customPatchIndex].file.replace(/^.*[\/\\]/g,'')), 'error');
 			});
@@ -305,6 +315,44 @@ var AppSettings={
 
 var myTimeout;
 
+function __getid(){
+	var id = el('checkbox-swapcase').checked;
+	id |= (el('checkbox-battletower').checked << 1);
+	id |= (el('checkbox-battlemoves').checked << 2);
+	id |= (el('checkbox-randomversion').checked << 3);
+	return ''+id;
+}
+
+function __change(elem, check){
+	var selectedCustomPatchIndex, selectedCustomPatchCompressedIndex, selectedPatch;
+
+	if(check){
+		el('checkbox-swapcase').checked = !!(elem.value & 1);
+		el('checkbox-battletower').checked = !!(elem.value & (1 << 1));
+		el('checkbox-battlemoves').checked = !!(elem.value & (1 << 2));
+		el('checkbox-randomversion').checked = !!(elem.value & (1 << 3));
+	}
+
+	if(/^\d+,\d+$/.test(elem.value)){
+		var indexes=elem.value.split(',');
+		selectedCustomPatchIndex=parseInt(indexes[0]);
+		selectedCustomPatchCompressedIndex=parseInt(indexes[1]);
+		selectedPatch=CUSTOM_PATCHER[selectedCustomPatchIndex].patches[selectedCustomPatchCompressedIndex];
+	}else{
+		selectedCustomPatchIndex=parseInt(elem.value);
+		selectedCustomPatchCompressedIndex=null;
+		selectedPatch=CUSTOM_PATCHER[selectedCustomPatchIndex];
+	}
+
+	if(selectedPatch.fetchedFile){
+		parseCustomPatch(selectedPatch);
+	}else{
+		patch=null;
+		patchFile=null;
+		fetchPatch(selectedCustomPatchIndex, selectedCustomPatchCompressedIndex);
+	}
+}
+
 /* initialize app */
 addEvent(window,'load',function(){
 	/* zip-js web worker */
@@ -369,32 +417,44 @@ addEvent(window,'load',function(){
 				}
 			}
 		}
-
+		select.value = 14;
 		addEvent(select,'change',function(){
-			var selectedCustomPatchIndex, selectedCustomPatchCompressedIndex, selectedPatch;
+			__change(this, true);
+		});
+		fetchPatch(14, 0);
 
-			if(/^\d+,\d+$/.test(this.value)){
-				var indexes=this.value.split(',');
-				selectedCustomPatchIndex=parseInt(indexes[0]);
-				selectedCustomPatchCompressedIndex=parseInt(indexes[1]);
-				selectedPatch=CUSTOM_PATCHER[selectedCustomPatchIndex].patches[selectedCustomPatchCompressedIndex];
-			}else{
-				selectedCustomPatchIndex=parseInt(this.value);
-				selectedCustomPatchCompressedIndex=null;
-				selectedPatch=CUSTOM_PATCHER[selectedCustomPatchIndex];
-			}
-			
-			
-			if(selectedPatch.fetchedFile){
-				parseCustomPatch(selectedPatch);
-			}else{
-				patch=null;
-				patchFile=null;
-				fetchPatch(selectedCustomPatchIndex, selectedCustomPatchCompressedIndex);
+		addEvent(el('checkbox-swapcase'),'change',function(){
+			var id = __getid();
+			console.log(id);
+			if(select.value !== id){
+				select.value=id;
+				__change(select, false);
 			}
 		});
-		fetchPatch(0, 0);
-	
+		addEvent(el('checkbox-battletower'),'change',function(){
+			var id = __getid();
+			console.log(id);
+			if(select.value !== id){
+				select.value=id;
+				__change(select, false);
+			}
+		});
+		addEvent(el('checkbox-battlemoves'),'change',function(){
+			var id = __getid();
+			console.log(id);
+			if(select.value !== id){
+				select.value=id;
+				__change(select, false);
+			}
+		});
+		addEvent(el('checkbox-randomversion'),'change',function(){
+			var id = __getid();
+			console.log(id);
+			if(select.value !== id){
+				select.value=id;
+				__change(select, false);
+			}
+		});
 	}else{
 		//setTabCreateEnabled(true);
 		//el('input-file-rom1').value='';
@@ -537,6 +597,8 @@ addEvent(window,'load',function(){
 //}
 
 function updateChecksums(file, startOffset, force){
+    el('crc32').className='';
+    el('md5').className='';
 	if(file===romFile && file.fileSize>33554432 && !force){
 		el('crc32').innerHTML='File is too big. <span onclick=\"updateChecksums(romFile,'+startOffset+',true)\">Force calculate checksum</span>';
 		el('md5').innerHTML='';
