@@ -14,7 +14,7 @@
 */
 
 var PRECACHE_ID='frlg-plus-js';
-var PRECACHE_VERSION='003';
+var PRECACHE_VERSION='004';
 var PRECACHE_URLS=[
 	'/frlg-plus-js/','/frlg-plus-js/index.html',
 	'/frlg-plus-js/manifest.json',
